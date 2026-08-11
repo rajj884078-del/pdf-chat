@@ -15,16 +15,30 @@ if uploaded_file:
 	for page in reader.pages:
 		text = text + page.extract_text()
 	st.success("✅ PDF load ho gayi! Now ask question.")
+	
+	if "messages" not in st.session_state:
+		st.session_state.messages = []
+
+	for msg in st.session_state.messages:
+		st.write(msg["role"]+ ": " + msg["content"])
 
 	que = st.text_input("ASK ABOUT PDF:")
 	
 	if que:
+		st.session_state.messages.append({"role": "User", "content": que})
+		
+		conversation = ""
+		for msg in st.session_state.messages:
+			conversation = conversation + msg["role"] + ": " + msg["content"] + "\n"
+
+
 		with st.spinner("thinking..."):		
-			full_prompt = "Ye document ka content hai:\n" + text + "\n\nIske base par answer do: " + que
+			full_prompt = "Ye document hai:\n" + text + "\n\nYe ab tak ki baat-cheet hai:\n" + conversation + "\nAb aakhri que ka chhota, seedha jawab do."
 			ans = client.models.generate_content(
 				model = "gemini-3.6-flash",
 				contents = full_prompt
 		)
-			st.write(ans.text)
+			st.session_state.messages.append({"role": "Bot", "content": ans.text})
+			st.write("Bot: "+ ans.text)
 	
 
