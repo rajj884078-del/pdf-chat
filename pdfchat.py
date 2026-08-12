@@ -20,12 +20,12 @@ if uploaded_file:
 		st.session_state.messages = []
 
 	for msg in st.session_state.messages:
-		st.write(msg["role"]+ ": " + msg["content"])
-
+		with st.chat_message(msg["role"]):
+			st.write(msg["content"])
 	que = st.text_input("ASK ABOUT PDF:")
 	
 	if que:
-		st.session_state.messages.append({"role": "User", "content": que})
+		st.session_state.messages.append({"role": "user", "content": que})
 		
 		conversation = ""
 		for msg in st.session_state.messages:
@@ -38,7 +38,9 @@ if uploaded_file:
 				model = "gemini-3.6-flash",
 				contents = full_prompt
 		)
-			st.session_state.messages.append({"role": "Bot", "content": ans.text})
-			st.write("Bot: "+ ans.text)
+			st.session_state.messages.append({"role": "assistant", "content": ans.text})
+			
+			with st.chat_message("assistant"):	
+				st.write(ans.text)
 	
 
