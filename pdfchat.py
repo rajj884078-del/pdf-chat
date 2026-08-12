@@ -7,6 +7,9 @@ client = genai.Client(api_key=st.secrets["GEMINI_KEY"])
 st.title("📄 Chat with your PDF")
 st.write("Apni koi bhi PDF upload karo aur uske baare mein sawaal poocho. AI aapki file padhke jawab dega.")
 
+if st.button("New Chat"):
+	st.session_state.messages = []
+
 uploaded_file = st.file_uploader("Apni PDF upload karo", type="pdf")
 
 if uploaded_file:
