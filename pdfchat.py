@@ -21,6 +21,14 @@ if uploaded_file:
 	
 	if "messages" not in st.session_state:
 		st.session_state.messages = []
+		try:
+			f = open("chats.txt")
+			old = f.read()
+			f.close()
+			if old:
+				st.session_state.messages.append({"role": "assistant", "content": "Old chat:\n" + old})
+		except:
+			pass
 
 	for msg in st.session_state.messages:
 		with st.chat_message(msg["role"]):
@@ -42,7 +50,9 @@ if uploaded_file:
 				contents = full_prompt
 		)
 			st.session_state.messages.append({"role": "assistant", "content": ans.text})
-			
+			f = open("chats.txt", "w")
+			f.write(conversation + "Bot: " + ans.text)
+			f.close()
 			with st.chat_message("assistant"):	
 				st.write(ans.text)
 	
