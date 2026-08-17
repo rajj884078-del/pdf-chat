@@ -1,0 +1,8 @@
+user: hi
+assistant: Aapne abhi tak koi sawal nahi pucha hai (pehle sirf "hi" aaya tha). 
+
+Kripya apna sawal bataiye, main uska chhota aur seedha jawab dunga.
+user: is it franchisee model?
+Bot: **Haan, yeh ek franchise model hai.** 
+
+Document ke mutabiq, isme "Franchise Roadmap" taiyar kiya gaya hai aur agle 18 mahino me Delhi-NCR me 5 hub locations kholne ka target hai.
